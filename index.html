@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecolution - A New Era of Sustainable Living</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            color: #E0E0E0;
+        }
+        .text-primary { color: #00E676; }
+        .bg-primary { background-color: #00E676; }
+        .text-secondary { color: #69F0AE; }
+        .bg-secondary { background-color: #69F0AE; }
+        .text-dark { color: #121212; }
+
+        @keyframes subtle-zoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .hero-bg {
+            position: relative;
+            overflow: hidden; /* Important for keeping pseudo-elements contained */
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80');
+            background-size: cover;
+            background-position: center;
+            animation: subtle-zoom 20s infinite alternate ease-in-out;
+            z-index: 1;
+        }
+        .hero-bg::after { /* The overlay */
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+
+        .content-z {
+            position: relative;
+            z-index: 3;
+        }
+
+        .btn {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 7px 14px rgba(0, 230, 118, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-3d-wrapper {
+            perspective: 1500px;
+        }
+        .card-3d {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+            transform-style: preserve-3d;
+            overflow: hidden;
+        }
+        .card-3d:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .card-3d .card-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+        }
+        .card-3d:hover .card-bg {
+            opacity: 0.15;
+        }
+        .card-3d .shine {
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            transition: left 0.6s ease;
+        }
+        .card-3d:hover .shine {
+            left: 150%;
+        }
+
+        .why-us-card {
+             transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .why-us-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-section {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        /* Interactive Growth Demo Styles */
+        .plant-part {
+            opacity: 0;
+            transform-origin: bottom center;
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            transform: scale(0.5);
+        }
+        .plant-part.is-grown {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="text-gray-300">
+
+    <header class="container mx-auto px-6 py-6 md:py-12 content-z">
+        <div class="flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-primary" style="text-shadow: 0 0 10px rgba(0, 230, 118, 0.5);">Ecolution</h1>
+            <nav class="hidden md:block">
+                <a href="#features" class="mx-4 text-gray-300 hover:text-primary transition-colors">Features</a>
+                <a href="#demo" class="mx-4 text-gray-300 hover:text-primary transition-colors">Demo</a>
+                <a href="#why-us" class="mx-4 text-gray-300 hover:text-primary transition-colors">Why Us?</a>
+                <a href="#download" class="mx-4 px-6 py-2 bg-primary text-dark font-bold rounded-full btn">Get the App</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="min-h-screen flex items-center justify-center text-center py-20 px-6 hero-bg">
+            <div class="max-w-4xl mx-auto text-white content-z">
+                <h2 class="text-5xl md:text-7xl font-bold leading-tight mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.8);">
+                    A New Era of Sustainable Living
+                </h2>
+                <p class="text-xl max-w-2xl mx-auto mb-8" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.8);">
+                    Seamlessly integrate eco-conscious choices into your daily life. Discover, track, and amplify your positive impact on the planet.
+                </p>
+                <a href="#download" class="inline-block px-10 py-4 bg-primary text-dark text-lg font-semibold rounded-full btn shadow-lg">Begin Your Journey</a>
+            </div>
+        </section>
+
+        <section id="features" class="py-20 px-6 fade-in-section">
+            <div class="container mx-auto">
+                <h3 class="text-4xl font-bold text-center text-primary mb-16">Features That Empower Change</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+                    <!-- Feature Card 1 -->
+                    <div class="card-3d-wrapper">
+                        <div class="card-3d p-8 text-center">
+                            <div class="shine"></div>
+                            <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1558296236-a3e795a97457?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=709&q=80')"></div>
+                            <div class="relative">
+                                <h4 class="font-bold text-2xl mb-2 text-primary">Glass Product Database</h4>
+                                <p class="text-gray-300">Browse products through our 'Eco-Glass' interface, seeing their impact on the planet with beautiful clarity.</p>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Feature Card 2 -->
+                     <div class="card-3d-wrapper">
+                        <div class="card-3d p-8 text-center">
+                            <div class="shine"></div>
+                            <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1509420316987-d27b0fdd9dd5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80')"></div>
+                            <div class="relative">
+                               <h4 class="font-bold text-2xl mb-2 text-primary">Augmented Reality Impact</h4>
+                               <p class="text-gray-300">Visualize your positive footprint in real-time. Watch a virtual tree grow in your room with every sustainable choice made.</p>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Feature Card 3 -->
+                     <div class="card-3d-wrapper">
+                        <div class="card-3d p-8 text-center">
+                            <div class="shine"></div>
+                            <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1476231682828-37e571bc172f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80')"></div>
+                            <div class="relative">
+                                <h4 class="font-bold text-2xl mb-2 text-primary">Living Education</h4>
+                                <p class="text-gray-300">Learn with interactive stories that adapt to your journey, unlocking new insights as your habits evolve.</p>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Add more cards as needed -->
+                </div>
+            </div>
+        </section>
+
+        <section id="demo" class="py-20 px-6 fade-in-section">
+            <div class="container mx-auto text-center">
+                <h3 class="text-4xl font-bold text-primary mb-16">Watch Your Impact Grow</h3>
+                <div class="max-w-xl mx-auto p-8 bg-gray-800 rounded-xl shadow-lg border border-green-500/20">
+                    <h4 id="challenge-title" class="text-2xl font-bold mb-4 text-secondary">Your Daily Green Habit</h4>
+                    <p id="challenge-desc" class="text-gray-400 mb-6">Small, consistent actions lead to tangible growth. Complete the 7-day challenge to cultivate a new habit and see your effort blossom.</p>
+                    
+                    <!-- Interactive Growth SVG -->
+                    <div class="relative w-64 h-64 mx-auto mb-4" aria-hidden="true">
+                        <svg viewBox="0 0 200 200" class="w-full h-full">
+                            <!-- Pot -->
+                            <path d="M60 180 Q100 200 140 180 L130 150 Q100 160 70 150 Z" fill="#5A3E2B"/>
+                            <rect x="65" y="145" width="70" height="10" fill="#7C563F" />
+
+                            <!-- Plant Parts -->
+                            <g id="plant-stage-1" class="plant-part"><path d="M100 150 Q100 140 102 130" stroke="#00E676" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+                            <g id="plant-stage-2" class="plant-part"><path d="M102 130 C110 120 110 110 105 100" stroke="#00E676" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+                            <g id="plant-stage-3" class="plant-part"><path d="M105 100 C90 115 80 110 75 120" fill="#00E676"/></g> <!-- Leaf 1 -->
+                            <g id="plant-stage-4" class="plant-part"><path d="M105 100 C120 110 130 105 135 115" fill="#00E676"/></g> <!-- Leaf 2 -->
+                            <g id="plant-stage-5" class="plant-part"><path d="M105 100 C95 80 95 70 100 60" stroke="#00E676" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+                            <g id="plant-stage-6" class="plant-part"><path d="M100 60 C90 75 80 70 75 80" fill="#00E676"/></g> <!-- Leaf 3 -->
+                            <g id="plant-stage-7" class="plant-part"><path d="M100 60 C110 70 120 65 125 75" fill="#00E676"/></g> <!-- Leaf 4 -->
+                        </svg>
+                    </div>
+
+                    <p class="text-sm text-gray-500 mb-6">Progress: <span id="progress-text">0/7 Days</span></p>
+                    <button id="complete-challenge-btn" class="inline-block px-8 py-3 bg-primary text-dark font-semibold rounded-full btn shadow-lg">Complete Day 1</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-us" class="py-20 bg-gray-900 px-6 fade-in-section">
+            <div class="container mx-auto text-center">
+                <h3 class="text-4xl font-bold text-primary mb-16">Why Ecolution Is Different</h3>
+                <div class="grid md:grid-cols-3 gap-12">
+                    <div class="why-us-card p-6 rounded-lg bg-gray-800">
+                        <h4 class="text-2xl font-bold text-secondary mb-4">Hyper-Personalized Path</h4>
+                        <p class="text-gray-400">Our AI adapts to your lifestyle, suggesting effortless changes that feel natural to you, not prescriptive.</p>
+                    </div>
+                    <div class="why-us-card p-6 rounded-lg bg-gray-800">
+                        <h4 class="text-2xl font-bold text-secondary mb-4">Effortless & Fun</h4>
+                        <p class="text-gray-400">Sustainability shouldn't be a chore. We use gamification to make a positive impact feel rewarding and exciting.</p>
+                    </div>
+                    <div class="why-us-card p-6 rounded-lg bg-gray-800">
+                        <h4 class="text-2xl font-bold text-secondary mb-4">Collective Impact</h4>
+                        <p class="text-gray-400">You're not alone. See how your actions combine with the community's to achieve global-scale environmental goals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download-section py-24 px-6 text-center text-white fade-in-section">
+            <div class="max-w-3xl mx-auto content-z">
+                <h3 class="text-4xl md:text-5xl font-bold mb-4 leading-tight" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.8);">Ready to Start Your Green Revolution?</h3>
+                <p class="text-xl max-w-2xl mx-auto mb-8" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.7);">Join a global movement of individuals making a tangible difference. One small choice at a time, we are changing the world.</p>
+                <a href="#" class="inline-block px-12 py-4 bg-white text-primary text-lg font-semibold rounded-full btn shadow-lg">Download for a Better Planet</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 mt-0">
+        <div class="container mx-auto px-6 py-4 text-center text-gray-600">
+            <p>&copy; 2025 Ecolution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 3D Card Hover Effect
+        const cards3D = document.querySelectorAll('.card-3d');
+        cards3D.forEach(card => {
+            const wrapper = card.parentElement;
+            wrapper.addEventListener('mousemove', (e) => {
+                const rect = wrapper.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const { width, height } = rect;
+                const rotateX = (y / height - 0.5) * -18; // Invert for natural feel
+                const rotateY = (x / width - 0.5) * 18;
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+            });
+            wrapper.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+
+        // Interactive Growth Demo Logic
+        let currentDay = 0;
+        const totalDays = 7;
+        const progressText = document.getElementById('progress-text');
+        const completeBtn = document.getElementById('complete-challenge-btn');
+        const plantParts = Array.from({length: totalDays}, (_, i) => document.getElementById(`plant-stage-${i + 1}`));
+
+        if (completeBtn) {
+            completeBtn.addEventListener('click', () => {
+                if (currentDay < totalDays) {
+                    currentDay++;
+
+                    // Grow the next part of the plant
+                    const currentPlantPart = plantParts[currentDay - 1];
+                    if(currentPlantPart) {
+                        currentPlantPart.classList.add('is-grown');
+                    }
+                    
+                    // Update text content
+                    progressText.textContent = `${currentDay}/${totalDays} Days`;
+
+                    if (currentDay < totalDays) {
+                      completeBtn.textContent = `Complete Day ${currentDay + 1}`;
+                    } else {
+                       document.getElementById('challenge-title').textContent = "Habit Cultivated!";
+                       completeBtn.textContent = 'Challenge Completed!';
+                       completeBtn.disabled = true;
+                       completeBtn.classList.remove('bg-primary');
+                       completeBtn.classList.add('bg-secondary');
+                    }
+                }
+            });
+        }
+
+
+        // Fade-in Sections on Scroll
+        const fadeInSections = document.querySelectorAll('.fade-in-section');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        fadeInSections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
